@@ -93,7 +93,7 @@ function RegisterUser() {
     setError('');
     
     try {
-      const response = await fetch('https://0by7j8suf2.execute-api.ap-northeast-2.amazonaws.com/proxy/api/users/register', {
+      const response = await fetch('https://0by7j8suf2.execute-api.ap-northeast-2.amazonaws.com/proxy/api/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -108,7 +108,11 @@ function RegisterUser() {
         throw new Error(data.message || '사용자 등록에 실패했습니다.');
       }
       
-      setToken(data.token);
+      setToken(data.userId);
+      setFormData({
+        nickname: '',
+        phone: '010-'
+      });
     } catch (err) {
       setError(err.message);
     }
@@ -168,8 +172,13 @@ function RegisterUser() {
 
       {token && (
         <RegisterUserTokenDisplay>
-          <h3>발급된 토큰:</h3>
-          <p>{token}</p>
+          <h3>사용자 등록 완료</h3>
+          <p><strong>사용자 코드:</strong> {token}</p>
+          <p><strong>닉네임:</strong> {formData.nickname}</p>
+          <p><strong>전화번호:</strong> {formData.phone}</p>
+          <p style={{ marginTop: '1rem', color: '#017355', fontWeight: 'bold' }}>
+            위 사용자 코드를 메모해주세요!
+          </p>
         </RegisterUserTokenDisplay>
       )}
     </RegisterUserContainer>
