@@ -49,6 +49,7 @@ function RegisterUser() {
   });
   const [token, setToken] = useState('');
   const [error, setError] = useState('');
+  const [registeredUser, setRegisteredUser] = useState(null);
 
   const formatPhoneNumber = (value) => {
     const numbers = value.replace(/[^\d]/g, '').substring(3);
@@ -108,7 +109,13 @@ function RegisterUser() {
         throw new Error(data.message || '사용자 등록에 실패했습니다.');
       }
       
+      setRegisteredUser({
+        userId: data.userId,
+        nickname: formData.nickname,
+        phone: formData.phone
+      });
       setToken(data.userId);
+      
       setFormData({
         nickname: '',
         phone: '010-'
@@ -170,12 +177,12 @@ function RegisterUser() {
         </div>
       )}
 
-      {token && (
+      {registeredUser && (
         <RegisterUserTokenDisplay>
           <h3>사용자 등록 완료</h3>
-          <p><strong>사용자 코드:</strong> {token}</p>
-          <p><strong>닉네임:</strong> {formData.nickname}</p>
-          <p><strong>전화번호:</strong> {formData.phone}</p>
+          <p><strong>사용자 코드:</strong> {registeredUser.userId}</p>
+          <p><strong>닉네임:</strong> {registeredUser.nickname}</p>
+          <p><strong>전화번호:</strong> {registeredUser.phone}</p>
           <p style={{ marginTop: '1rem', color: '#017355', fontWeight: 'bold' }}>
             위 사용자 코드를 메모해주세요!
           </p>
