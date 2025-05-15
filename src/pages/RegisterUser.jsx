@@ -92,7 +92,7 @@ function RegisterUser() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
+    console.log("api호출됨");
     try {
       const response = await fetch('https://0by7j8suf2.execute-api.ap-northeast-2.amazonaws.com/proxy/api/users', {
         method: 'POST',
